@@ -1,5 +1,7 @@
 ﻿using E_Commerce.Services.AccountServices;
 using E_Commerce.ViewModels.UserVM;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,9 +24,10 @@ namespace E_Commerce.Controllers
 
         // GET: api/<AccountController>
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
-
+            var token = Request.Headers.Authorization.ToString().Split(' ')[1];
             var rt = _userService.GetAllUser();
             return Ok(rt.Response);
 

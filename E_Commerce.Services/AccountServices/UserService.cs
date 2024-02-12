@@ -162,7 +162,7 @@ namespace E_Commerce.Services.AccountServices
                         {
                             OTP = Generatedotp,
                             OtpGenerationDatetime = DateTime.Now,
-                            OtpExpireDatetime = DateTime.UtcNow.AddMinutes(10),
+                            OtpExpireDatetime = DateTime.UtcNow.AddHours(1),
                             UserID = obj.UserId
                         };
 
@@ -283,7 +283,7 @@ namespace E_Commerce.Services.AccountServices
                      new Claim("Id",UserRes.UserId.ToString()),
                      new Claim(ClaimTypes.Role ,UserRes.UserType)
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(2),
+                    Expires = DateTime.UtcNow.AddHours(2),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
