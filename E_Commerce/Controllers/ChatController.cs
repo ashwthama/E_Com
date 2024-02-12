@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace E_Commerce.Controllers
 {
@@ -14,7 +15,16 @@ namespace E_Commerce.Controllers
         [HttpGet]
         public IActionResult GetAllMessage()
         {
+
             return Ok();
+        }
+
+        public class ChatHub : Hub
+        {
+            public async Task SendMessage(string user, string message)
+            {
+                await Clients.All.SendAsync("ReceiveMessage", user, message);
+            }
         }
     }
 }
