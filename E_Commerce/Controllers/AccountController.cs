@@ -61,12 +61,12 @@ namespace E_Commerce.Controllers
 
         }
 
-        [HttpPost("OtpVerify")]
-        public IActionResult VerifyOtp([FromBody] OTPVM otp)
-        {
-            var res = _userService.ValidateOTP(otp);
-            return StatusCode(res.StatusCode, res.Response);
-        }
+        //[HttpPost("OtpVerify")]
+        //public IActionResult VerifyOtp([FromBody] OTPVM otp)
+        //{
+        //    var res = _userService.ValidateOTP(otp);
+        //    return StatusCode(res.StatusCode, res.Response);
+        //}
 
         [HttpPut("{email}")]
         public async Task<IActionResult> Put(string email, [FromBody] EmailVM value)
