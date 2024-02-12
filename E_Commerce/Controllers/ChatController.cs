@@ -7,6 +7,10 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
+        /// <summary>
+        /// I am adding this controller for signal R integration 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetAllMessage()
         {
