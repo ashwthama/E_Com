@@ -1,4 +1,5 @@
 using E_Commerce.Domain.Context;
+using E_Commerce.Domain.Models.Chat;
 using E_Commerce.Repository.CartRepository;
 using E_Commerce.Repository.DiscountRepository;
 using E_Commerce.Repository.ProductRepository;
@@ -20,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
 //Migration
 builder.Services.AddDbContext<UserContext>(options =>
@@ -76,6 +78,11 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSignalR(option =>
+{
+    option.EnableDetailedErrors = true;
+});
+
 //TOKEN KEY
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -106,6 +113,7 @@ builder.Services.AddSwaggerGen(c => {
 });
 
 var app = builder.Build();
+
 app.UseAuthentication();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -128,5 +136,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

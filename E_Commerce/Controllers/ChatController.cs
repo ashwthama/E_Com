@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using E_Commerce.Domain.Models.Chat;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -15,6 +16,8 @@ namespace E_Commerce.Controllers
         [HttpGet]
         public IActionResult GetAllMessage()
         {
+            ChatHub chat = new ChatHub();
+            chat.SendMessage("User","hello");
 
             return Ok();
         }
