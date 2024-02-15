@@ -1,5 +1,6 @@
 using E_Commerce.Domain.Context;
 using E_Commerce.Domain.Models.Chat;
+using E_Commerce.Domain.Models.TimerFeatures;
 using E_Commerce.Repository.CartRepository;
 using E_Commerce.Repository.DiscountRepository;
 using E_Commerce.Repository.ProductRepository;
@@ -19,6 +20,15 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder
+        .WithOrigins("http://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
+});
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
@@ -46,6 +56,8 @@ builder.Services.AddTransient<ICartService, CartService>();
 
 builder.Services.AddScoped<IDiscountRepo, DiscountRepo>();
 builder.Services.AddTransient<IDIscountService, DIscountService>();
+
+builder.Services.AddSingleton<TimerManager>();
 
 //twilio services
 
@@ -123,15 +135,16 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.UseCors(builder =>
-{
-    builder
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader();
-});
+//app.UseCors(builder =>
+//{
+//    builder
+//    .AllowAnyOrigin()
+//    .AllowAnyMethod()
+//    .AllowAnyHeader();
+//});
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
